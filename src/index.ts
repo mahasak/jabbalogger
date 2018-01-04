@@ -1,3 +1,5 @@
+import './polyfills/objectAssign'
+
 export function hex(str: string): string[] {
     if (typeof str !== 'string') {
         return [];
