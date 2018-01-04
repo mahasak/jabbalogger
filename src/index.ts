@@ -1,4 +1,6 @@
 import './polyfills/objectAssign'
+
+export { Guid } from './guid';
 export * from './message'
 export { LogLevel } from './logLevel';
 
