@@ -4,15 +4,32 @@
   "description": "",
   "main": "dist/jabbalogger.es.js",
   "scripts": {
-    "prepublish": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "npm run build",
+    "build": "webpack",
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "./node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   },
   "keywords": [],
   "author": "Mahasak Pijittum <mahasak@gmail.com> (http://www.mahasak.com)",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "jest": "^22.0.4",
+    "ts-jest": "^22.0.0",
     "ts-loader": "^3.2.0",
+    "typemoq": "^2.1.0",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0"
   }
