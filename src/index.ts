@@ -1,5 +1,5 @@
 import './polyfills/objectAssign'
-import { MessageType } from './messageType';
+export * from './message'
 export { LogLevel } from './logLevel';
 
 export function hex(str: string): string[] {
