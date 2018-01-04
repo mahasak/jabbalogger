@@ -72,6 +72,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["hex"] = hex;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logLevel__ = __webpack_require__(2);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_1__logLevel__["a"]; });
+
 
 function hex(str) {
     if (typeof str !== 'string') {
@@ -110,6 +113,23 @@ if (typeof Object.assign != 'function') {
         return to;
     };
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LogLevel; });
+// Enums for logging level
+var LogLevel;
+(function (LogLevel) {
+    LogLevel[LogLevel["debug"] = 1] = "debug";
+    LogLevel[LogLevel["info"] = 2] = "info";
+    LogLevel[LogLevel["warning"] = 4] = "warning";
+    LogLevel[LogLevel["error"] = 8] = "error";
+    LogLevel[LogLevel["fatal"] = 16] = "fatal";
+})(LogLevel || (LogLevel = {}));
 
 
 /***/ })
