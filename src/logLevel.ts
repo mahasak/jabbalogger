@@ -1,8 +1,8 @@
 // Enums for logging level
 export enum LogLevel {
-  debug = 1 << 0,
-  info = 1 << 1,
-  warning = 1 << 2,
-  error = 1 << 3,
-  fatal = 1 << 4
+  Debug = 1 << 0,
+  Information = 1 << 1,
+  Warning = 1 << 2,
+  Error = 1 << 3,
+  Fatal = 1 << 4
 }
