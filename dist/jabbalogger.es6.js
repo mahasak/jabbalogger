@@ -72,8 +72,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["hex"] = hex;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logLevel__ = __webpack_require__(2);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_1__logLevel__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__message__ = __webpack_require__(2);
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "MessageType", function() { return __WEBPACK_IMPORTED_MODULE_1__message__["c"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "EventLog", function() { return __WEBPACK_IMPORTED_MODULE_1__message__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Measurement", function() { return __WEBPACK_IMPORTED_MODULE_1__message__["b"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logLevel__ = __webpack_require__(3);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_2__logLevel__["a"]; });
+
 
 
 function hex(str) {
@@ -120,15 +125,70 @@ if (typeof Object.assign != 'function') {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return MessageType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventLog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Measurement; });
+var MessageType;
+(function (MessageType) {
+    MessageType[MessageType["EventLog"] = 1] = "EventLog";
+    MessageType[MessageType["Measurement"] = 2] = "Measurement";
+})(MessageType || (MessageType = {}));
+var EventLog = /** @class */ (function () {
+    function EventLog(message) {
+        this.id = '1234';
+        this.logTime = new Date();
+        this.message = message;
+        this.tags = {};
+    }
+    EventLog.prototype.getMessageType = function () {
+        return MessageType.EventLog;
+    };
+    EventLog.prototype.getMessage = function () {
+        return {
+            message: this.message,
+            tags: this.tags
+        };
+    };
+    return EventLog;
+}());
+
+var Measurement = /** @class */ (function () {
+    function Measurement(name, value) {
+        this.id = '1234';
+        this.logTime = new Date();
+        this.name = name;
+        this.value = value;
+        this.tags = {};
+    }
+    Measurement.prototype.getMessageType = function () {
+        return MessageType.Measurement;
+    };
+    Measurement.prototype.getMessage = function () {
+        return {
+            name: this.name,
+            value: this.value,
+            tags: this.tags
+        };
+    };
+    return Measurement;
+}());
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LogLevel; });
 // Enums for logging level
 var LogLevel;
 (function (LogLevel) {
-    LogLevel[LogLevel["debug"] = 1] = "debug";
-    LogLevel[LogLevel["info"] = 2] = "info";
-    LogLevel[LogLevel["warning"] = 4] = "warning";
-    LogLevel[LogLevel["error"] = 8] = "error";
-    LogLevel[LogLevel["fatal"] = 16] = "fatal";
+    LogLevel[LogLevel["Debug"] = 1] = "Debug";
+    LogLevel[LogLevel["Information"] = 2] = "Information";
+    LogLevel[LogLevel["Warning"] = 4] = "Warning";
+    LogLevel[LogLevel["Error"] = 8] = "Error";
+    LogLevel[LogLevel["Fatal"] = 16] = "Fatal";
 })(LogLevel || (LogLevel = {}));
 
 
