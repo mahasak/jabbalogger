@@ -1,13 +1,14 @@
 {
-  "name": "scribe",
+  "name": "jabbalogger",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/jabbalogger.es.js",
   "scripts": {
+    "prepublish": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Mahasak Pijittum",
+  "author": "Mahasak Pijittum <mahasak@gmail.com> (http://www.mahasak.com)",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
