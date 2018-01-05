@@ -16,6 +16,7 @@ module.exports = {
   },
   output: {
     filename: 'jabbalogger.es6.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    library: 'jabbalogger'
   }
 };

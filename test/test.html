@@ -1,9 +1,17 @@
 <html>
     <head>
-        <script type="text/javascript" src="https://rawgit.com/mahasak/jabbalogger/master/dist/jabbalogger.es6.js"></script>
+        
+        <script type="text/javascript">
+        (function(){
+            var log = new LoggerConfiguration();
+            console.log(log);
+        }
+        )();
+        </script>
     </head>
     <body>
         Test JabbaLogger<br/>
         <input type="button" value="log to console" />
+        <script type="text/javascript" src="https://rawgit.com/mahasak/jabbalogger/master/dist/jabbalogger.es6.js"></script>
     </body>
 </html>
