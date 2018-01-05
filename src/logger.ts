@@ -1,25 +1,32 @@
+import {LogSinks} from './sink';
+import { IMessage } from './message';
+
+
 export class Logger {
-    fatal(message: Error|string, ...properties: any[]) {
+    private logSinks: LogSinks
+
+    constructor(logSinks: LogSinks) {
+        this.logSinks = logSinks
 
     }
 
-    error(message: Error|string, ...properties: any[]) {
-
+    flush(): Promise < any > {
+        return this.logSinks.flush();
     }
 
-    warning(message: Error|string, ...properties: any[]) {
-
+    /**
+     * Emits events through this logger's pipeline.
+     */
+    emit(events: IMessage[]): IMessage[] {
+        try {
+            this.logSinks.emit(events);
+            return events;
+        } catch (error) {
+            throw error;
+        }
     }
-    
-    info(message: Error|string, ...properties: any[]) {
 
-    }
-
-    debug(message: Error|string, ...properties: any[]) {
-
-    }
-
-    write(level: number, message: string, properties: any[], error?: Error) {
-        //const log = new LogMessage
+    write(message: IMessage, properties?: any[], error ? : Error) {
+        this.logSinks.emit([message]);
     }
 }
