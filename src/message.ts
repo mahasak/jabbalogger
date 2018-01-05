@@ -10,6 +10,7 @@ export interface Map<T> {
 export interface IMessage {
   application: string
   id: string
+  logLevel: number;
   logTime: Date
   tags: Map<string>
   getMessageType(): MessageType
@@ -19,6 +20,7 @@ export interface IMessage {
 export class EventLog implements IMessage {
   application: string;
   id: string;
+  logLevel: number;
   logTime: Date;
   message: string;
   tags: Map<string>;  
@@ -47,6 +49,7 @@ export class Measurement implements IMessage {
   application: string;
   id: string;
   name: string
+  logLevel: number;
   logTime: Date;
   tags: Map<string>;
   value: number;

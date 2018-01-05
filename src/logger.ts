@@ -18,4 +18,8 @@ export class Logger {
     debug(message: Error|string, ...properties: any[]) {
 
     }
+
+    write(level: number, message: string, properties: any[], error?: Error) {
+        //const log = new LogMessage
+    }
 }
