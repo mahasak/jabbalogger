@@ -120,6 +120,8 @@ var LogLevel;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__message__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logLevel__ = __webpack_require__(1);
+
 
 
 class Logger {
@@ -127,7 +129,7 @@ class Logger {
         this.logSinks = logSinks;
     }
     warning(message, tags = {}) {
-        const log = new __WEBPACK_IMPORTED_MODULE_1__index__["EventLog"](message, tags);
+        const log = new __WEBPACK_IMPORTED_MODULE_1__index__["EventLog"](__WEBPACK_IMPORTED_MODULE_2__logLevel__["a" /* LogLevel */].Warning, message, tags);
         this.write(log);
     }
     measure(name, value, tags = {}) {
@@ -166,8 +168,9 @@ var MessageType;
     MessageType[MessageType["Measurement"] = 2] = "Measurement";
 })(MessageType || (MessageType = {}));
 class EventLog {
-    constructor(message, tags) {
+    constructor(logLevel, message, tags) {
         this.id = '1234';
+        this.logLevel = logLevel;
         this.logTime = new Date();
         this.message = message;
         this.tags = tags;
@@ -176,10 +179,7 @@ class EventLog {
         return MessageType.EventLog;
     }
     getMessage() {
-        return {
-            message: this.message,
-            tags: this.tags
-        };
+        return this.message;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = EventLog;
@@ -196,11 +196,7 @@ class Measurement {
         return MessageType.Measurement;
     }
     getMessage() {
-        return {
-            name: this.name,
-            value: this.value,
-            tags: this.tags
-        };
+        return `metrics: ${this.name} = ${this.value}`;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["b"] = Measurement;
@@ -243,7 +239,9 @@ if (typeof Object.assign != 'function') {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__logLevel__ = __webpack_require__(1);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logLevel__ = __webpack_require__(1);
+
 
 class ConsoleSink {
     constructor(options) {
@@ -263,25 +261,30 @@ class ConsoleSink {
     emit(events) {
         for (let i = 0; i < events.length; ++i) {
             const e = events[i];
-            switch (e.logLevel) {
-                case __WEBPACK_IMPORTED_MODULE_0__logLevel__["a" /* LogLevel */].Fatal:
-                    this.writeToConsole(this.console.error, 'Fatal', e);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_0__logLevel__["a" /* LogLevel */].Error:
-                    this.writeToConsole(this.console.error, 'Error', e);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_0__logLevel__["a" /* LogLevel */].Warning:
-                    this.writeToConsole(this.console.warn, 'Warning', e);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_0__logLevel__["a" /* LogLevel */].Information:
-                    this.writeToConsole(this.console.info, 'Information', e);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_0__logLevel__["a" /* LogLevel */].Debug:
-                    this.writeToConsole(this.console.debug, 'Debug', e);
-                    break;
-                default:
-                    this.writeToConsole(this.console.log, 'Log', e);
-                    break;
+            if (e.getMessageType() == __WEBPACK_IMPORTED_MODULE_0__index__["MessageType"].Measurement) {
+                this.writeToConsole(this.console.info, 'Measurement', e);
+            }
+            else {
+                switch (e.logLevel) {
+                    case __WEBPACK_IMPORTED_MODULE_1__logLevel__["a" /* LogLevel */].Fatal:
+                        this.writeToConsole(this.console.error, 'Fatal', e);
+                        break;
+                    case __WEBPACK_IMPORTED_MODULE_1__logLevel__["a" /* LogLevel */].Error:
+                        this.writeToConsole(this.console.error, 'Error', e);
+                        break;
+                    case __WEBPACK_IMPORTED_MODULE_1__logLevel__["a" /* LogLevel */].Warning:
+                        this.writeToConsole(this.console.warn, 'Warning', e);
+                        break;
+                    case __WEBPACK_IMPORTED_MODULE_1__logLevel__["a" /* LogLevel */].Information:
+                        this.writeToConsole(this.console.info, 'Information', e);
+                        break;
+                    case __WEBPACK_IMPORTED_MODULE_1__logLevel__["a" /* LogLevel */].Debug:
+                        this.writeToConsole(this.console.debug, 'Debug', e);
+                        break;
+                    default:
+                        this.writeToConsole(this.console.log, 'Log', e);
+                        break;
+                }
             }
         }
         return events;
@@ -290,7 +293,7 @@ class ConsoleSink {
         return Promise.resolve();
     }
     writeToConsole(logMethod, prefix, e) {
-        let output = `[${prefix}] ${e.getMessage()}`;
+        let output = `[${prefix}][${e.logTime}] ${e.getMessage()}`;
         if (this.options.includeTimestamps) {
             output = `${e.logTime} ${output}`;
         }

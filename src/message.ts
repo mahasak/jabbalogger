@@ -14,7 +14,7 @@ export interface IMessage {
   logTime: Date
   tags: Map<string>
   getMessageType(): MessageType
-  getMessage(): object
+  getMessage(): string
 }
 
 export class EventLog implements IMessage {
@@ -25,8 +25,9 @@ export class EventLog implements IMessage {
   message: string;
   tags: Map<string>;  
 
-  constructor(message: string, tags: Map<string>) {
+  constructor(logLevel: number, message: string, tags: Map<string>) {
     this.id = '1234'
+    this.logLevel = logLevel
     this.logTime =  new Date()
     this.message = message
     this.tags = tags
@@ -36,11 +37,8 @@ export class EventLog implements IMessage {
     return MessageType.EventLog
   }
 
-  getMessage(): object {
-    return {
-      message: this.message,
-      tags: this.tags
-    };
+  getMessage(): string {
+    return this.message;
   }
 
 }
@@ -66,12 +64,8 @@ export class Measurement implements IMessage {
     return MessageType.Measurement
   }
 
-  getMessage(): object {
-    return {
-      name: this.name,
-      value: this.value,
-      tags: this.tags
-    };
+  getMessage(): string {
+    return `metrics: ${this.name} = ${this.value}`;
   }
 
 }

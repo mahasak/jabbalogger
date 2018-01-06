@@ -1,6 +1,7 @@
 import { LogSinks } from './sink';
 import { Map,IMessage,Measurement } from './message';
 import { EventLog } from './index';
+import { LogLevel } from './logLevel';
 
 
 export class Logger {
@@ -11,7 +12,7 @@ export class Logger {
     }
 
     warning(message: string, tags: Map<string> = {}): void {
-        const log = new EventLog(message, tags)
+        const log = new EventLog(LogLevel.Warning, message, tags)
         this.write(log)
     }
 

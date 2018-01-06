@@ -1,5 +1,5 @@
 import { Sink } from '../sink';
-import { IMessage } from '../index';
+import { IMessage, MessageType } from '../index';
 import { LogLevel } from '../logLevel';
 
 export interface ConsoleProxy {
@@ -41,31 +41,34 @@ export class ConsoleSink implements Sink {
   public emit(events: IMessage[]): IMessage[] {
     for (let i = 0; i < events.length; ++i) {
       const e = events[i];
+      if(e.getMessageType() == MessageType.Measurement) {
+        this.writeToConsole(this.console.info, 'Measurement', e);
+      } else {
+        switch (e.logLevel) {
+          case LogLevel.Fatal:
+            this.writeToConsole(this.console.error, 'Fatal', e);
+            break;
 
-      switch (e.logLevel) {
-        case LogLevel.Fatal:
-          this.writeToConsole(this.console.error, 'Fatal', e);
-          break;
+          case LogLevel.Error:
+            this.writeToConsole(this.console.error, 'Error', e);
+            break;
 
-        case LogLevel.Error:
-          this.writeToConsole(this.console.error, 'Error', e);
-          break;
+          case LogLevel.Warning:
+            this.writeToConsole(this.console.warn, 'Warning', e);
+            break;
 
-        case LogLevel.Warning:
-          this.writeToConsole(this.console.warn, 'Warning', e);
-          break;
+          case LogLevel.Information:
+            this.writeToConsole(this.console.info, 'Information', e);
+            break;
+            
+          case LogLevel.Debug:
+            this.writeToConsole(this.console.debug, 'Debug', e);
+            break;
 
-        case LogLevel.Information:
-          this.writeToConsole(this.console.info, 'Information', e);
-          break;
-          
-        case LogLevel.Debug:
-          this.writeToConsole(this.console.debug, 'Debug', e);
-          break;
-
-        default: 
-          this.writeToConsole(this.console.log, 'Log', e);
-          break;
+          default: 
+            this.writeToConsole(this.console.log, 'Log', e);
+            break;
+        }
       }
     }
 
@@ -77,7 +80,8 @@ export class ConsoleSink implements Sink {
   }
 
   private writeToConsole(logMethod: Function, prefix: string, e: IMessage) {
-    let output = `[${prefix}] ${e.getMessage()}`;
+    let output = `[${prefix}][${e.logTime}] ${e.getMessage()}`;
+    
     if (this.options.includeTimestamps) {
       output = `${e.logTime} ${output}`;
     }

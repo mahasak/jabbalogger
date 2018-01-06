@@ -1,14 +1,16 @@
 <html>
     <head>
-        <script type="text/javascript" src="https://rawgit.com/mahasak/jabbalogger/master/dist/jabbalogger.es6.js"></script>
+        <script type="text/javascript" src="/dist/jabbalogger.es6.js"></script>
         <script type="text/javascript">
         (function(){
             var loggerConfig = new jabbalogger.LoggerConfiguration();
-            var logger = loggerConfig.writeTo(new jabbalogger.ConsoleSink()).create();
+            var logger = loggerConfig
+                            .writeTo(new jabbalogger.ConsoleSink())
+                            .create();
             
             console.log(logger);
 
-            //logger.warning('Warning');
+            logger.warning('Warning');
             logger.measure('spec', 1.1);
         }
         )();
