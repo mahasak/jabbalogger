@@ -25,11 +25,11 @@ export class EventLog implements IMessage {
   message: string;
   tags: Map<string>;  
 
-  constructor(message: string) {
+  constructor(message: string, tags: Map<string>) {
     this.id = '1234'
     this.logTime =  new Date()
     this.message = message
-    this.tags = {}
+    this.tags = tags
   }
 
   getMessageType():MessageType {
@@ -54,12 +54,12 @@ export class Measurement implements IMessage {
   tags: Map<string>;
   value: number;
 
-  constructor(name: string, value: number) {
+  constructor(name: string, value: number, tags: Map<string>) {
     this.id = '1234'
     this.logTime =  new Date()
     this.name = name
     this.value = value
-    this.tags = {}
+    this.tags = tags
   }
 
   getMessageType():MessageType {
