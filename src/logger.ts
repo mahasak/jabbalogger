@@ -1,5 +1,6 @@
 import { LogSinks } from './sink';
 import { Map,IMessage,Measurement } from './message';
+import { EventLog } from './index';
 
 
 export class Logger {
@@ -7,6 +8,11 @@ export class Logger {
 
     constructor(logSinks: LogSinks) {
         this.logSinks = logSinks
+    }
+
+    warning(message: string, tags: Map<string> = {}): void {
+        const log = new EventLog(message, tags)
+        this.write(log)
     }
 
     measure(name: string, value: number, tags: Map<string> = {}): void {
