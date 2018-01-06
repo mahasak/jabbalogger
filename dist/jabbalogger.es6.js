@@ -61,11 +61,43 @@ var jabbalogger =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sinks_console__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logger__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loggerFactory__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__guid__ = __webpack_require__(9);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Guid", function() { return __WEBPACK_IMPORTED_MODULE_4__guid__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__message__ = __webpack_require__(3);
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "MessageType", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["c"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "EventLog", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Measurement", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["b"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__logLevel__ = __webpack_require__(1);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_6__logLevel__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_2__logger__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LoggerConfiguration", function() { return __WEBPACK_IMPORTED_MODULE_3__loggerFactory__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ConsoleSink", function() { return __WEBPACK_IMPORTED_MODULE_1__sinks_console__["a"]; });
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -82,20 +114,29 @@ var LogLevel;
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__message__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(0);
+
+
 class Logger {
     constructor(logSinks) {
         this.logSinks = logSinks;
     }
+    warning(message, tags = {}) {
+        const log = new __WEBPACK_IMPORTED_MODULE_1__index__["EventLog"](message, tags);
+        this.write(log);
+    }
+    measure(name, value, tags = {}) {
+        const measurement = new __WEBPACK_IMPORTED_MODULE_0__message__["b" /* Measurement */](name, value, tags);
+        this.write(measurement);
+    }
     flush() {
         return this.logSinks.flush();
     }
-    /**
-     * Emits events through this logger's pipeline.
-     */
     emit(events) {
         try {
             this.logSinks.emit(events);
@@ -114,39 +155,60 @@ class Logger {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sinks_console__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logger__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loggerFactory__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__guid__ = __webpack_require__(8);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Guid", function() { return __WEBPACK_IMPORTED_MODULE_4__guid__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__message__ = __webpack_require__(9);
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "MessageType", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["c"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "EventLog", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["a"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Measurement", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__logLevel__ = __webpack_require__(0);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_6__logLevel__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_2__logger__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LoggerConfiguration", function() { return __WEBPACK_IMPORTED_MODULE_3__loggerFactory__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ConsoleSink", function() { return __WEBPACK_IMPORTED_MODULE_1__sinks_console__["a"]; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return MessageType; });
+var MessageType;
+(function (MessageType) {
+    MessageType[MessageType["EventLog"] = 1] = "EventLog";
+    MessageType[MessageType["Measurement"] = 2] = "Measurement";
+})(MessageType || (MessageType = {}));
+class EventLog {
+    constructor(message, tags) {
+        this.id = '1234';
+        this.logTime = new Date();
+        this.message = message;
+        this.tags = tags;
+    }
+    getMessageType() {
+        return MessageType.EventLog;
+    }
+    getMessage() {
+        return {
+            message: this.message,
+            tags: this.tags
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = EventLog;
 
-
-
-
-
-
-
+class Measurement {
+    constructor(name, value, tags) {
+        this.id = '1234';
+        this.logTime = new Date();
+        this.name = name;
+        this.value = value;
+        this.tags = tags;
+    }
+    getMessageType() {
+        return MessageType.Measurement;
+    }
+    getMessage() {
+        return {
+            name: this.name,
+            value: this.value,
+            tags: this.tags
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["b"] = Measurement;
 
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,11 +239,11 @@ if (typeof Object.assign != 'function') {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__logLevel__ = __webpack_require__(0);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__logLevel__ = __webpack_require__(1);
 
 class ConsoleSink {
     constructor(options) {
@@ -239,10 +301,10 @@ class ConsoleSink {
 /* harmony export (immutable) */ __webpack_exports__["a"] = ConsoleSink;
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -432,12 +494,12 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sink__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logger__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sink__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logger__ = __webpack_require__(2);
 
 
 class LoggerConfiguration {
@@ -457,7 +519,7 @@ class LoggerConfiguration {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -515,7 +577,7 @@ class LogSinks {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -528,59 +590,6 @@ class Guid {
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Guid;
-
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return MessageType; });
-var MessageType;
-(function (MessageType) {
-    MessageType[MessageType["EventLog"] = 1] = "EventLog";
-    MessageType[MessageType["Measurement"] = 2] = "Measurement";
-})(MessageType || (MessageType = {}));
-class EventLog {
-    constructor(message) {
-        this.id = '1234';
-        this.logTime = new Date();
-        this.message = message;
-        this.tags = {};
-    }
-    getMessageType() {
-        return MessageType.EventLog;
-    }
-    getMessage() {
-        return {
-            message: this.message,
-            tags: this.tags
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = EventLog;
-
-class Measurement {
-    constructor(name, value) {
-        this.id = '1234';
-        this.logTime = new Date();
-        this.name = name;
-        this.value = value;
-        this.tags = {};
-    }
-    getMessageType() {
-        return MessageType.Measurement;
-    }
-    getMessage() {
-        return {
-            name: this.name,
-            value: this.value,
-            tags: this.tags
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["b"] = Measurement;
 
 
 
