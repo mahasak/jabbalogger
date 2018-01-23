@@ -88,4 +88,5 @@ export class ConsoleSink implements Sink {
     const values = [];
     logMethod(output, ...values);
   }
+  
 }
