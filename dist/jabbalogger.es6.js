@@ -73,19 +73,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__polyfills_objectAssign__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sinks_console__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logger__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loggerFactory__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__guid__ = __webpack_require__(9);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Guid", function() { return __WEBPACK_IMPORTED_MODULE_4__guid__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__message__ = __webpack_require__(3);
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "MessageType", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["c"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "EventLog", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["a"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Measurement", function() { return __WEBPACK_IMPORTED_MODULE_5__message__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__logLevel__ = __webpack_require__(1);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_6__logLevel__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_2__logger__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LoggerConfiguration", function() { return __WEBPACK_IMPORTED_MODULE_3__loggerFactory__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sinks_localStorage__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__logger__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__loggerFactory__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__guid__ = __webpack_require__(10);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Guid", function() { return __WEBPACK_IMPORTED_MODULE_5__guid__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__message__ = __webpack_require__(3);
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "MessageType", function() { return __WEBPACK_IMPORTED_MODULE_6__message__["c"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "EventLog", function() { return __WEBPACK_IMPORTED_MODULE_6__message__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Measurement", function() { return __WEBPACK_IMPORTED_MODULE_6__message__["b"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__logLevel__ = __webpack_require__(1);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LogLevel", function() { return __WEBPACK_IMPORTED_MODULE_7__logLevel__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_3__logger__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LoggerConfiguration", function() { return __WEBPACK_IMPORTED_MODULE_4__loggerFactory__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ConsoleSink", function() { return __WEBPACK_IMPORTED_MODULE_1__sinks_console__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LocalStorageSink", function() { return __WEBPACK_IMPORTED_MODULE_2__sinks_localStorage__["a"]; });
+
 
 
 
@@ -501,7 +504,73 @@ process.umask = function() { return 0; };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sink__ = __webpack_require__(8);
+class LocalStorageSink {
+    constructor() {
+        LocalStorageSink._isSupport = LocalStorageSink.isSupported();
+    }
+    isEnabled() {
+        return LocalStorageSink._isSupport;
+    }
+    static isSupported() {
+        try {
+            const itemBackup = localStorage.getItem("");
+            localStorage.removeItem("");
+            localStorage.setItem("", "testData");
+            localStorage.removeItem("");
+            if (itemBackup !== null) {
+                localStorage.setItem("", itemBackup);
+            }
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
+    }
+    create() {
+    }
+    emit(events) {
+        for (let i = 0; i < events.length; ++i) {
+            const e = events[i];
+            console.log("LocalStorage Logging" + e);
+        }
+        return events;
+    }
+    flush() {
+        throw new Error('Not implemented yet.');
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = LocalStorageSink;
+
+class WebStorages {
+    static get localStorage() {
+        if (WebStorages._localStorage !== undefined) {
+            return WebStorages._localStorage;
+        }
+        return WebStorages._localStorage = WebStorages.local();
+    }
+    static local() {
+        if (typeof localStorage === 'undefined') {
+            return null;
+        }
+        try {
+            localStorage.getItem(''); // localStorage was disabled by user.
+        }
+        catch (_a) {
+            return null;
+        }
+        return localStorage;
+    }
+}
+/* unused harmony export WebStorages */
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sink__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logger__ = __webpack_require__(2);
 
 
@@ -522,7 +591,7 @@ class LoggerConfiguration {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -580,7 +649,7 @@ class LogSinks {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

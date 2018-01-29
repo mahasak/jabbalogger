@@ -7,6 +7,7 @@
             var loggerConfig = new jabbalogger.LoggerConfiguration();
             var logger = loggerConfig
                             .writeTo(new jabbalogger.ConsoleSink())
+                            .writeTo(new jabbalogger.LocalStorageSink())
                             .create();
             
             console.log(logger);
