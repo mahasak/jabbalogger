@@ -1,8 +1,9 @@
 <html>
     <head>
         <script type="text/javascript" src="/dist/jabbalogger.es6.js"></script>
+        <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script type="text/javascript">
-        (function(){
+        $(document).ready(function(){
             var loggerConfig = new jabbalogger.LoggerConfiguration();
             var logger = loggerConfig
                             .writeTo(new jabbalogger.ConsoleSink())
@@ -12,12 +13,21 @@
 
             logger.warning('Warning');
             logger.measure('spec', 1.1);
-        }
-        )();
+
+            function doLog(message) {
+                var el = document.getElementById("message");
+                logger.warning(el.value);
+            }
+
+            var el = document.getElementById("addlog");
+            el.addEventListener("click", doLog, false);
+        });
         </script>
+        
     </head>
     <body>
         Test JabbaLogger<br/>
-        <input type="button" value="log to console" />        
+        <input id="message" type="text"  />    
+        <input id="addlog" type="button" value="log to console" />        
     </body>
 </html>
