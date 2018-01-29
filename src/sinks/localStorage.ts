@@ -3,7 +3,16 @@ import { IMessage } from '../message';
 
 
 export class LocalStorageSink implements Sink {
-    private isSupported(): boolean {
+    private static _isSupport: boolean;
+    constructor() {
+        LocalStorageSink._isSupport = LocalStorageSink.isSupported();
+    }
+
+    public isEnabled(): boolean {
+        return LocalStorageSink._isSupport;
+    }
+
+    private static isSupported(): boolean {
         try {
             const itemBackup = localStorage.getItem("");
             localStorage.removeItem("");
@@ -22,13 +31,18 @@ export class LocalStorageSink implements Sink {
             return false;
         }
     }
-    
+
     private create() {
 
     }
 
     public emit(events: IMessage[]): IMessage[] {
-        throw new Error('Not implemented yet.');
+        for (let i = 0; i < events.length; ++i) {
+            const e = events[i];
+            console.log("LocalStorage Logging" + e)
+        }
+
+        return events
     }
 
     public flush(): Promise<any> {
