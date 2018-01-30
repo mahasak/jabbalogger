@@ -35,11 +35,12 @@ export class LocalStorageSink implements Sink {
     private create() {
 
     }
-
+    
     public emit(events: IMessage[]): IMessage[] {
         for (let i = 0; i < events.length; ++i) {
             const e = events[i];
-            console.log("LocalStorage Logging" + e)
+            console.log("LocalStorage Logging id" + e.id + "with:" +JSON.stringify(e))
+            localStorage.setItem(e.id, JSON.stringify(e));
         }
 
         return events
