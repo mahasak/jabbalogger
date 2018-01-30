@@ -15,3 +15,5 @@ and support for writing data offline and send log data asynchronously.
 * `npm install -g typescript`
 * `npm install -g webpack`
 
+## TODO
+* Refactor logger abstraction
