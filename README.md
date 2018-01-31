@@ -17,3 +17,4 @@ and support for writing data offline and send log data asynchronously.
 
 ## TODO
 * Refactor logger abstraction
+* Need to figure out how to use localStorage as queue properly
